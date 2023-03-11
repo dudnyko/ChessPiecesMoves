@@ -15,7 +15,7 @@ namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
-        static Board myBoard = new Board(8);
+        static Board myBoard = new Board();
 
         public Button[,] btnGrid = new Button[myBoard.Size, myBoard.Size];
 
@@ -24,6 +24,13 @@ namespace WindowsFormsApp1
             InitializeComponent();
             populateGrid();
         }
+
+        Image king = Image.FromFile(@"C:\Users\Aleksandr\Documents\Моя папка\ChessPiecesMoves\MainView\king.png");
+        Image knight = Image.FromFile(@"C:\Users\Aleksandr\Documents\Моя папка\ChessPiecesMoves\MainView\knight.png");
+        Image rook = Image.FromFile(@"C:\Users\Aleksandr\Documents\Моя папка\ChessPiecesMoves\MainView\rook.png");
+        Image bishop = Image.FromFile(@"C:\Users\Aleksandr\Documents\Моя папка\ChessPiecesMoves\MainView\bishop.png");
+        Image queen = Image.FromFile(@"C:\Users\Aleksandr\Documents\Моя папка\ChessPiecesMoves\MainView\queen.png");
+        Image point = Image.FromFile(@"C:\Users\Aleksandr\Documents\Моя папка\ChessPiecesMoves\MainView\point.png");
 
         private void populateGrid()
         {
@@ -51,6 +58,7 @@ namespace WindowsFormsApp1
 
             }
 
+            // Drawing the chess board
             for (int i = 0; i < myBoard.Size; i++)
             {
                 for (int j = 0; j < myBoard.Size; j++)
@@ -85,28 +93,41 @@ namespace WindowsFormsApp1
                     btnGrid[i, j].Text = "";
                     if (myBoard.Grid[i, j].LegalNextMove == true)
                     {
-                        btnGrid[i, j].Text = "point";
+                        btnGrid[i, j].Image = point;
                     }
                     else if (myBoard.Grid[i, j].CurrentlyOccupied == true)
                     {
                         if (comboBox1.Text == "King")
-                            btnGrid[i, j].Text = "king";
+                            btnGrid[i, j].Image = king;
 
                         else if (comboBox1.Text == "Knight")
-                            btnGrid[i, j].Text = "knight";
+                            btnGrid[i, j].Image = knight;
 
                         else if (comboBox1.Text == "Queen")
-                            btnGrid[i, j].Text = "queen";
+                            btnGrid[i, j].Image = queen;
 
                         else if (comboBox1.Text == "Rook")
-                            btnGrid[i, j].Text = "rook";
+                            btnGrid[i, j].Image = rook;
 
                         else if (comboBox1.Text == "Bishop")
-                            btnGrid[i, j].Text = "bishop";
+                            btnGrid[i, j].Image = bishop;
                     }
                 }
 
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int newSize = Convert.ToInt32(textBox1.Text);
+
+            if (newSize > 2 && newSize < 46)
+            {
+                myBoard = new Board(newSize);
+                throw new Exception("Applaying changes");
+            }
+            else
+                throw new Exception("The board size must be between 3 and 45");
         }
     }
 }
