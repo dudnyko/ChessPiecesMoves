@@ -31,17 +31,37 @@ namespace WindowsFormsApp1
         Image bishop = Image.FromFile(@"C:\Users\Aleksandr\Documents\Моя папка\ChessPiecesMoves\MainView\bishop.png");
         Image queen = Image.FromFile(@"C:\Users\Aleksandr\Documents\Моя папка\ChessPiecesMoves\MainView\queen.png");
         Image point = Image.FromFile(@"C:\Users\Aleksandr\Documents\Моя папка\ChessPiecesMoves\MainView\point.png");
+       
 
         private void populateGrid()
         {
             int buttonSize = panel1.Width / myBoard.Size;
             panel1.Height = panel1.Width;
+            int tempBoardSize = myBoard.Size; // Variable that displays the square number on the board
+            char boardCoordinate = 'a';
 
             for (int i = 0; i < myBoard.Size; i++)
             {
                 for (int j = 0; j < myBoard.Size; j++)
                 {
                     btnGrid[i, j] = new Button();
+
+                    if (i == 0)
+                    {
+                        
+                        btnGrid[i, j].Text = tempBoardSize--.ToString();
+                        btnGrid[i, j].TextAlign = ContentAlignment.BottomLeft;
+                        btnGrid[i, j].Font = new Font("Microsoft Sans Serif", 64/myBoard.Size);
+                    }
+
+                    if (j == myBoard.Size - 1)
+                    {
+                        btnGrid[i,j].Text += "     " + boardCoordinate++.ToString();
+                        btnGrid[i,j].TextAlign = ContentAlignment.BottomCenter;
+                        btnGrid[i, j].Font = new Font("Microsoft Sans Serif", 64 / myBoard.Size);
+                        if (i == 0)
+                            btnGrid[i,j].TextAlign= ContentAlignment.BottomLeft;
+                    }
 
                     btnGrid[i, j].Width = buttonSize;
                     btnGrid[i, j].Height = buttonSize;
